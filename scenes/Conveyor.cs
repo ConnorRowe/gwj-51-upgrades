@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Bread
 {
     [Tool]
-    public class Conveyor : StaticBody2D
+    public class Conveyor : StaticBody2D, IButtonInteractive
     {
         const float MoveSpeed = 230;
         float length = 10;
@@ -93,6 +93,11 @@ namespace Bread
             {
                 body.ApplyImpulse(Vector2.Down.Rotated(Rotation), Vector2.Right.Rotated(Rotation) * MoveSpeed * Speed * delta * (Reverse ? -1f : 1f));
             }
+        }
+
+        public void ButtonInteract()
+        {
+            Reverse = !Reverse;
         }
     }
 }

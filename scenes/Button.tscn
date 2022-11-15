@@ -1,0 +1,85 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://textures/button_plate.png" type="Texture" id=1]
+[ext_resource path="res://textures/button_casing.png" type="Texture" id=2]
+[ext_resource path="res://scenes/Button.cs" type="Script" id=3]
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+uniform float y_cutoff_pos = 0;
+uniform mat4 global_transform;
+varying vec2 world_pos;
+
+
+void vertex()
+{
+	world_pos = (global_transform * vec4(VERTEX, 0.0, 1.0)).xy;
+}
+
+void fragment()
+{	
+	if(world_pos.y > y_cutoff_pos)
+		discard;
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = SubResource( 3 )
+shader_param/y_cutoff_pos = 143.0
+shader_param/global_transform = Transform( 1, 0, 0, 0, 1, 177, 0, 0, 142, 0, 0, 0 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 0.46486, 1.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 0.5 )
+
+[node name="Button" type="StaticBody2D"]
+script = ExtResource( 3 )
+
+[node name="PlateBody" type="RigidBody2D" parent="."]
+position = Vector2( 0, -4 )
+mode = 2
+mass = 0.14
+gravity_scale = -12.33
+
+[node name="Sprite" type="Sprite" parent="PlateBody"]
+material = SubResource( 4 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlateBody"]
+position = Vector2( 0, 4 )
+polygon = PoolVector2Array( -10, -4, -8, -6, 8, -6, 10, -4, 10, -2, -10, -2 )
+
+[node name="Casing" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+offset = Vector2( 0, -3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -10.5351, -1.5 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2( 10.5313, -1.5 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 0.5 )
+shape = SubResource( 2 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+visible = false
+position = Vector2( 0, -5 )
+node_a = NodePath("../PlateBody")
+node_b = NodePath("..")
+softness = 2.26
+
+[node name="GrooveJoint2D" type="GrooveJoint2D" parent="."]
+visible = false
+rotation = 3.14159
+node_a = NodePath("..")
+node_b = NodePath("../PlateBody")
+length = 5.0
+initial_offset = 5.0

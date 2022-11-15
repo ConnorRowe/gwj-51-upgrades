@@ -14,7 +14,7 @@ namespace Bread
         RigidBody2D right;
         Label debugLabel;
 
-        float impulsePower = 500;
+        float impulsePower = 800;
         int partsOnGround = 0;
         float impulseCooldown = 1f;
 
@@ -147,7 +147,7 @@ namespace Bread
             {
                 foreach (var contact in body.GetCollidingBodies())
                 {
-                    if (contact is StaticBody2D)
+                    if (!(contact is PlayerBody))
                     {
                         contactCount++;
                         break;

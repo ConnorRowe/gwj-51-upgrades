@@ -57,7 +57,7 @@ namespace Bread
 
                 var linearVelocityDelta = state.LinearVelocity - lastLinearVelocity;
                 lastLinearVelocity = state.LinearVelocity;
-                bool sharpVelChange = linearVelocityDelta.LengthSquared() > 7000;
+                bool sharpVelChange = linearVelocityDelta.LengthSquared() > 8500;
                 if (sharpVelChange)
                     GD.Print("sharpVelChange");
 
