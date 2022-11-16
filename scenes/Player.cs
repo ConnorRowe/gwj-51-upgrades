@@ -7,12 +7,17 @@ namespace Bread
     {
         static Color bread1 = Colors.Red;
         static Color bread2 = Colors.Blue;
+        static Color eyestalkColour = new Color("71413b");
         static Color[] breadColours = new Color[6] { bread1, bread1, bread2, bread2, bread2, bread1 };
         PlayerBody[] mainBodies = new PlayerBody[6];
         Vector2[] bodyPositions = new Vector2[6];
         RigidBody2D left;
         RigidBody2D right;
         Label debugLabel;
+        RigidBody2D eyeLeft;
+        RigidBody2D eyeRight;
+        ShaderMaterial shaderMaterial;
+        ShaderMaterial crumbsShaderMat = GD.Load<ShaderMaterial>("res://shaders/CrumbsShaderMat.tres");
 
         float impulsePower = 800;
         int partsOnGround = 0;
@@ -20,6 +25,8 @@ namespace Bread
 
         bool queueFreeze = false;
         bool queueUnfreeze = false;
+        bool isWet = false;
+        float wetness = 0f;
 
         public override void _Ready()
         {
@@ -27,6 +34,10 @@ namespace Bread
 
             left = GetNode<RigidBody2D>("Left");
             right = GetNode<RigidBody2D>("Right");
+            eyeLeft = GetNode<RigidBody2D>("EyeLeft");
+            eyeRight = GetNode<RigidBody2D>("EyeRight");
+
+            shaderMaterial = (ShaderMaterial)Material;
 
             int bodyCount = 0;
 
@@ -50,6 +61,32 @@ namespace Bread
                 if (impulseCooldown > 1f)
                     impulseCooldown = 1f;
             }
+
+            isWet = false;
+            foreach (var body in mainBodies)
+            {
+                if (body.WetAreasIn.Count > 0)
+                {
+                    isWet = true;
+                    break;
+                }
+            }
+
+            if (isWet && wetness < 1f)
+            {
+                wetness += delta;
+                if (wetness > 1f)
+                    wetness = 1f;
+            }
+            else if (wetness > 0f)
+            {
+                wetness -= delta * 2f;
+                if (wetness < 0f)
+                    wetness = 0f;
+            }
+
+            shaderMaterial.SetShaderParam("wetness", wetness);
+            crumbsShaderMat.SetShaderParam("wetness", wetness);
         }
 
         public override void _Draw()
@@ -61,6 +98,9 @@ namespace Bread
 
             var startD = bodyPositions[0].MoveToward(bodyPositions[1], -1) - bodyPositions[0];
             var endD = bodyPositions[5].MoveToward(bodyPositions[1], -1) - bodyPositions[5];
+
+            DrawLine(bodyPositions[0], eyeLeft.Position, eyestalkColour, 1.5f);
+            DrawLine(bodyPositions[0], eyeRight.Position, eyestalkColour, 1.5f);
 
             bodyPositions[0] += startD;
             bodyPositions[5] += endD;

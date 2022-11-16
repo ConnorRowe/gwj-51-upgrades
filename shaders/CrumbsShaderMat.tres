@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+uniform vec4 normal_colour:hint_color;
+uniform vec4 wet_colour:hint_color;
+uniform float wetness;
+
+void fragment()
+{
+	COLOR = mix(normal_colour, wet_colour, wetness *.5);
+}"
+
+[resource]
+shader = SubResource( 4 )
+shader_param/normal_colour = Color( 0.858824, 0.643137, 0.388235, 1 )
+shader_param/wet_colour = Color( 0.156863, 0.360784, 0.768627, 1 )
+shader_param/wetness = 0.0

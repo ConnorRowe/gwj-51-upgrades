@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://shaders/CrumbsShaderMat.tres" type="Material" id=1]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.935323, 0.992045 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
@@ -22,7 +24,7 @@ scale_curve = SubResource( 2 )
 color = Color( 0.858824, 0.643137, 0.388235, 1 )
 
 [node name="CrumbsBurst" type="Particles2D"]
-emitting = false
+material = ExtResource( 1 )
 lifetime = 0.5
 explosiveness = 1.0
 local_coords = false

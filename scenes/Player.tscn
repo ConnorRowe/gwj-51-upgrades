@@ -5,34 +5,15 @@
 [ext_resource path="res://font/Normal.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/PlayerBody.cs" type="Script" id=4]
 [ext_resource path="res://textures/pupil.png" type="Texture" id=5]
-
-[sub_resource type="Shader" id=2]
-code = "shader_type canvas_item;
-
-uniform vec4 outline:hint_color;
-uniform vec4 fill1:hint_color;
-uniform vec4 fill2:hint_color;
-void fragment()
-{
-	if(COLOR.g > .5)
-	{
-		COLOR = outline;
-	}
-	else if(COLOR.r >= .5)
-	{
-		COLOR = fill1;
-	}
-	else if (COLOR.b > .5)
-	{
-		COLOR = fill2;
-	}
-}"
+[ext_resource path="res://shaders/Player.shader" type="Shader" id=6]
 
 [sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
+shader = ExtResource( 6 )
 shader_param/outline = Color( 0.443137, 0.254902, 0.231373, 1 )
 shader_param/fill1 = Color( 0.858824, 0.643137, 0.388235, 1 )
 shader_param/fill2 = Color( 0.956863, 0.823529, 0.611765, 1 )
+shader_param/wet_colour = Color( 0.156863, 0.360784, 0.768627, 1 )
+shader_param/wetness = null
 
 [sub_resource type="PhysicsMaterial" id=4]
 friction = 0.76
@@ -48,12 +29,13 @@ script = ExtResource( 2 )
 
 [node name="Middle1" type="RigidBody2D" parent="." groups=["BreadMain"]]
 position = Vector2( 0, -4 )
+collision_layer = 49
 mass = 1.5
 physics_material_override = SubResource( 4 )
 contacts_reported = 2
 contact_monitor = true
 can_sleep = false
-linear_damp = 1.1
+linear_damp = 0.25
 angular_damp = 1.1
 script = ExtResource( 4 )
 
@@ -69,12 +51,13 @@ custom_fonts/font = ExtResource( 3 )
 
 [node name="Middle2" type="RigidBody2D" parent="." groups=["BreadMain"]]
 position = Vector2( 0, -2 )
+collision_layer = 17
 mass = 1.5
 physics_material_override = SubResource( 4 )
 contacts_reported = 2
 contact_monitor = true
 can_sleep = false
-linear_damp = 1.1
+linear_damp = 0.25
 angular_damp = 1.1
 script = ExtResource( 4 )
 
@@ -82,12 +65,13 @@ script = ExtResource( 4 )
 shape = SubResource( 1 )
 
 [node name="Middle3" type="RigidBody2D" parent="." groups=["BreadMain"]]
+collision_layer = 17
 mass = 1.5
 physics_material_override = SubResource( 4 )
 contacts_reported = 2
 contact_monitor = true
 can_sleep = false
-linear_damp = 1.1
+linear_damp = 0.25
 angular_damp = 1.1
 script = ExtResource( 4 )
 
@@ -96,12 +80,13 @@ shape = SubResource( 1 )
 
 [node name="Middle4" type="RigidBody2D" parent="." groups=["BreadMain"]]
 position = Vector2( 0, 2 )
+collision_layer = 17
 mass = 1.5
 physics_material_override = SubResource( 4 )
 contacts_reported = 2
 contact_monitor = true
 can_sleep = false
-linear_damp = 1.1
+linear_damp = 0.25
 angular_damp = 1.1
 script = ExtResource( 4 )
 
@@ -110,12 +95,13 @@ shape = SubResource( 1 )
 
 [node name="Middle5" type="RigidBody2D" parent="." groups=["BreadMain"]]
 position = Vector2( 0, 4 )
+collision_layer = 17
 mass = 1.5
 physics_material_override = SubResource( 4 )
 contacts_reported = 2
 contact_monitor = true
 can_sleep = false
-linear_damp = 1.1
+linear_damp = 0.25
 angular_damp = 1.1
 script = ExtResource( 4 )
 
@@ -124,12 +110,13 @@ shape = SubResource( 1 )
 
 [node name="Middle6" type="RigidBody2D" parent="." groups=["BreadMain"]]
 position = Vector2( 0, 6 )
+collision_layer = 17
 mass = 1.5
 physics_material_override = SubResource( 4 )
 contacts_reported = 2
 contact_monitor = true
 can_sleep = false
-linear_damp = 1.1
+linear_damp = 0.25
 angular_damp = 1.1
 script = ExtResource( 4 )
 

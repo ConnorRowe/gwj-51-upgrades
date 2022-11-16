@@ -1,0 +1,61 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://textures/raincloud.png" type="Texture" id=1]
+[ext_resource path="res://textures/raindrop.png" type="Texture" id=2]
+[ext_resource path="res://scenes/Raincloud.cs" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
+
+[sub_resource type="CanvasItemMaterial" id=2]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0.741573, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+max_value = 1024.0
+_data = [ Vector2( 0, 1 ), 0.0, -1.31852, 0, 1, Vector2( 0.758427, 0 ), -18.6182, 182272.0, 0, 1, Vector2( 0.764045, 1024 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+emission_shape = 2
+emission_box_extents = Vector3( 10, 1, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 196, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping_curve = SubResource( 6 )
+anim_offset_curve = SubResource( 4 )
+
+[node name="Raincloud" type="Area2D"]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+linear_damp = 3.77
+script = ExtResource( 3 )
+ParticleLifetime = 0.54
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -20 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, -8 )
+
+[node name="Particles2D" type="Particles2D" parent="Sprite"]
+show_behind_parent = true
+material = SubResource( 2 )
+amount = 20
+lifetime = 0.54
+process_material = SubResource( 7 )
+texture = ExtResource( 2 )
