@@ -4,13 +4,13 @@ namespace Bread
 {
     public class IntroRoom : RoomArea
     {
-		AnimationPlayer animationPlayer;
+        AnimationPlayer animationPlayer;
         AnimatedSprite pressSpaceToCont;
         TextBox workerTextBox;
         TextBox bossTextBox;
 
-		int animNum = 0;
-        static string[] animationNames = new string[8] { "start", "sigh", "thunder", "shutup", "back_to_work", "lightning_strike", "im_off", "bread_born" };
+        int animNum = 0;
+        static string[] animationNames = new string[7] { "start", "sigh", "thunder", "shutup", "back_to_work", "lightning_strike", "bread_is_born" };
 
         public override void _Ready()
         {
@@ -64,11 +64,17 @@ namespace Bread
             bossTextBox.BBCode = text;
         }
 
-		private void NextAnim()
-		{
-			animNum++;
-			animationPlayer.Play(animationNames[animNum]);
-		}
+        private void NextAnim()
+        {
+            animNum++;
+            if(animNum < animationNames.Length)
+                animationPlayer.Play(animationNames[animNum]);
+        }
+
+        private void SpawnPlayer()
+        {
+            World.SpawnPlayer(GetNode<Position2D>("PlayerSpawn").GlobalPosition);
+        }
 
     }
 }

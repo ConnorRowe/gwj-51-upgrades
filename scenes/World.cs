@@ -5,8 +5,10 @@ namespace Bread
     public class World : Node2D
     {
         static World INSTANCE;
+        static PackedScene playerScene = GD.Load<PackedScene>("res://scenes/Player.tscn");
 
-        PlayerBody targetPlayerBody;
+        public static Player Player { get; private set; } = null;
+        PlayerBody targetPlayerBody = null;
         Camera2D camera;
         SceneTreeTween cameraTween;
         RoomArea currentRoom;
@@ -17,14 +19,13 @@ namespace Bread
             INSTANCE = this;
 
             camera = GetNode<Camera2D>("Camera2D");
-            targetPlayerBody = GetNode<PlayerBody>("Player/Middle3");
 
-            MoveCameraToRoom(GetNode<RoomArea>("RoomAreas/FirstRoom"), instant: true);
+            MoveCameraToRoom(GetNode<RoomArea>("RoomAreas/IntroRoom"), instant: true);
         }
 
         public override void _PhysicsProcess(float delta)
         {
-            if (!movingCamera)
+            if (!movingCamera && targetPlayerBody != null)
                 camera.GlobalPosition = targetPlayerBody.GlobalPosition;
         }
 
@@ -81,6 +82,20 @@ namespace Bread
         private void ResetMovingCamera()
         {
             movingCamera = false;
+        }
+
+        public static void SpawnPlayer(Vector2 globalPosition)
+        {
+            if (Player != null)
+            {
+                INSTANCE.RemoveChild(Player);
+                Player.QueueFree();
+            }
+
+            Player = playerScene.Instance<Player>();
+            INSTANCE.AddChild(Player);
+            INSTANCE.targetPlayerBody = Player.GetNode<PlayerBody>("Middle3");
+            Player.GlobalPosition = globalPosition;
         }
     }
 }

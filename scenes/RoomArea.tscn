@@ -14,3 +14,9 @@ script = ExtResource( 1 )
 [node name="Bounds" type="CollisionShape2D" parent="."]
 position = Vector2( 160, 90 )
 shape = SubResource( 1 )
+
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
+position = Vector2( 159, 89 )
+scale = Vector2( 16.9, 9.9 )
+process_parent = true
+physics_process_parent = true
