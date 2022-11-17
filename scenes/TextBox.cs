@@ -14,12 +14,13 @@ namespace Bread
                 {
                     richTextLabel.BbcodeText = value;
                     richTextLabel.VisibleCharacters = 0;
+                    richTextLabel.PercentVisible = 0;
                 }
 
             }
         }
 
-        float nextCharSpeed = .03f;
+        float nextCharSpeed = .05f;
         float count = 0f;
 
         public override void _Ready()

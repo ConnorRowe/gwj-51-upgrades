@@ -96,4 +96,4 @@ process_mode = 0
 [node name="Raincloud" parent="." instance=ExtResource( 10 )]
 position = Vector2( 234, 162 )
 Height = 50.0
-ParticleLifetime = 0.836
+ParticleLifetime = 0.829

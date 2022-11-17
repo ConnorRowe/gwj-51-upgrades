@@ -18,6 +18,9 @@ namespace Bread
         RigidBody2D eyeRight;
         ShaderMaterial shaderMaterial;
         ShaderMaterial crumbsShaderMat = GD.Load<ShaderMaterial>("res://shaders/CrumbsShaderMat.tres");
+        Particles2D crumbsLow;
+        Particles2D crumbsMed;
+        Particles2D crumbsHigh;
 
         float impulsePower = 800;
         int partsOnGround = 0;
@@ -31,6 +34,10 @@ namespace Bread
         public override void _Ready()
         {
             debugLabel = GetNode<Label>("Middle1/debuglabel");
+
+            crumbsLow = GetNode<Particles2D>("Middle6/CrumbsLow");
+            crumbsMed = GetNode<Particles2D>("Middle6/CrumbsMed");
+            crumbsHigh = GetNode<Particles2D>("Middle6/CrumbsHigh");
 
             left = GetNode<RigidBody2D>("Left");
             right = GetNode<RigidBody2D>("Right");
@@ -87,6 +94,11 @@ namespace Bread
 
             shaderMaterial.SetShaderParam("wetness", wetness);
             crumbsShaderMat.SetShaderParam("wetness", wetness);
+
+            float speed = mainBodies[5].LinearVelocity.LengthSquared();
+            crumbsLow.Emitting = speed >= 500 && speed < 5000;
+            crumbsMed.Emitting = speed >= 5000 && speed < 16000;
+            crumbsHigh.Emitting = speed > 16000;
         }
 
         public override void _Draw()

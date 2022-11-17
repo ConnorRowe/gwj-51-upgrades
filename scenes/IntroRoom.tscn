@@ -1,0 +1,794 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://scenes/RoomArea.tscn" type="PackedScene" id=1]
+[ext_resource path="res://textures/silhouettes_anim.png" type="Texture" id=2]
+[ext_resource path="res://textures/lightning.png" type="Texture" id=3]
+[ext_resource path="res://textures/space_to_cont.png" type="Texture" id=4]
+[ext_resource path="res://scenes/IntroRoom.cs" type="Script" id=5]
+[ext_resource path="res://textures/conveyor.png" type="Texture" id=6]
+[ext_resource path="res://textures/toaster.png" type="Texture" id=7]
+[ext_resource path="res://textures/cardboard_box.png" type="Texture" id=8]
+[ext_resource path="res://scenes/TerrainPolygon2D.cs" type="Script" id=9]
+[ext_resource path="res://textures/metal_tile.png" type="Texture" id=10]
+[ext_resource path="res://textures/bread.png" type="Texture" id=11]
+[ext_resource path="res://textures/toaster_handle.png" type="Texture" id=12]
+[ext_resource path="res://scenes/TextBox.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/Shaker.cs" type="Script" id=14]
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 166, 11 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 4 )
+region = Rect2( 166, 0, 166, 11 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 11, 166, 11 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 4 )
+region = Rect2( 166, 11, 166, 11 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CutsceneSpriteHolder/CutsceneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Lightning:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 2 ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "back_to_work"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CutsceneSpriteHolder/CutsceneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1.2, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 0, 3, 4 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "now get back to [shake]bloody work" ],
+"method": "SetBossText"
+} ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "lightning_strike"
+length = 8.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("CutsceneSpriteHolder/CutsceneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 2.5, 2.7, 2.9, 3, 4.88488, 5, 5.1, 5.2, 5.7, 5.75, 5.8, 5.85, 6.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 6, 7, 6, 7, 6, 7, 6, 7, 6, 8, 5, 8, 5, 6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Lightning:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5.4, 5.45, 5.5, 5.55, 5.6, 5.65, 5.7, 5.75, 5.8, 5.85, 5.9, 5.95, 6, 6.05 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 2, 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 2 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 3.25 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "StopConveyor"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("CutsceneSpriteHolder/CutsceneSprite/Shaker")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 5.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 2.0 ],
+"method": "Shake"
+} ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "shutup"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CutsceneSpriteHolder/CutsceneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 3, 0, 1 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "[shake]well ring the soddin health and safety commision then ye mardy git" ],
+"method": "SetBossText"
+} ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "sigh"
+tracks/0/type = "value"
+tracks/0/path = NodePath("CutsceneSpriteHolder/CutsceneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "[shake]*sigh*" ],
+"method": "SetWorkerText"
+} ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "start"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CutsceneSpriteHolder/CutsceneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "hurry up Rob, yev got about 50 more to test tonight before yer goin 'ome" ],
+"method": "SetBossText"
+} ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "thunder"
+length = 5.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CutsceneSpriteHolder/CutsceneSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 1.2, 1.3, 1.4, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 2, 0, 2, 0, 3, 0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 4.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "uhhhhhh im not so sure we should be workin in a storm like this boss..." ],
+"method": "SetWorkerText"
+} ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Convey"
+length = 2.5
+loop = true
+step = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Conveyor:material:shader_param/frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 21 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Conveyor/Toaster1:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -90, -15 ), Vector2( 0, -15 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Conveyor/Toaster2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -15 ), Vector2( 90, -15 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Conveyor/Toaster3:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.57, 1.06 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 90, -3 ), Vector2( 128.61, -3 ), Vector2( 145, 35 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Conveyor/Toaster4:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -180, -15 ), Vector2( -90, -15 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Conveyor/Toaster3:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = false
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.589, 1.099 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 89.9999 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Conveyor/Bread:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = false
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -90, -25 ), Vector2( 0, -25 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Conveyor/Bread2:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = false
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -25 ), Vector2( 90, -25 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Conveyor/Bread3:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = false
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.57, 0.73, 1.33 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 97, -25 ), Vector2( 136.61, -25 ), Vector2( 150, -8 ), Vector2( 212, -58 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Conveyor/Bread4:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = false
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -180, -25 ), Vector2( -90, -25 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Conveyor/Bread3:rotation_degrees")
+tracks/10/interp = 2
+tracks/10/loop_wrap = false
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.57, 0.73, 1.32 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 29.3878, 204.9 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Conveyor/Toaster3/Handle:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.62, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 7.32225, -9 ), Vector2( 7.32225, -9 ), Vector2( 7.322, -16.5 ) ]
+}
+tracks/12/type = "method"
+tracks/12/path = NodePath("Node2D/Box/Shaker")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 1.103 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 1.0 ],
+"method": "Shake"
+} ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Conveyor/Toaster3:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 1.008 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Conveyor:material:shader_param/frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Conveyor/Toaster1:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -90, -15 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Conveyor/Toaster2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -15 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Conveyor/Toaster3:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 90, -15 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Conveyor/Toaster4:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -180, -15 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Conveyor/Toaster3:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Conveyor/Bread:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -90, -25 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Conveyor/Bread2:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -25 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Conveyor/Bread3:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 97, -25 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Conveyor/Bread4:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -180, -25 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Conveyor/Bread3:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Conveyor/Toaster3/Handle:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 7.32225, -9 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Conveyor/Toaster3/Handle:rotation_degrees")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Conveyor/Toaster3:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Shader" id=10]
+code = "shader_type canvas_item;
+
+uniform int maxFrames;
+uniform int frame = 0;
+
+void vertex() {
+	VERTEX /= vec2(float(maxFrames), 1.0);
+}
+
+void fragment() {
+	vec2 uv = UV;
+	uv.x /= float(maxFrames);
+	uv.x += float(frame) / float(maxFrames);
+	COLOR = texture(TEXTURE, uv);
+}"
+
+[sub_resource type="ShaderMaterial" id=11]
+shader = SubResource( 10 )
+shader_param/maxFrames = 10
+shader_param/frame = 0
+
+[node name="IntroRoom" instance=ExtResource( 1 )]
+script = ExtResource( 5 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="0"]
+
+[node name="WorkerTextBox" parent="CanvasLayer" index="0" instance=ExtResource( 13 )]
+visible = false
+margin_left = 76.0
+margin_top = 6.0
+margin_right = -131.0
+margin_bottom = -141.0
+
+[node name="BossTextBox" parent="CanvasLayer" index="1" instance=ExtResource( 13 )]
+visible = false
+margin_left = 156.0
+margin_top = 51.0
+margin_right = -36.0
+margin_bottom = -87.0
+
+[node name="PressSpaceToCont" type="AnimatedSprite" parent="CanvasLayer" index="2"]
+visible = false
+position = Vector2( 235, 7 )
+frames = SubResource( 7 )
+frame = 3
+playing = true
+
+[node name="Bounds" parent="." index="1"]
+visible = false
+
+[node name="Lightning" type="Sprite" parent="." index="2"]
+position = Vector2( 42, 47 )
+z_index = 2
+texture = ExtResource( 3 )
+hframes = 13
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+autoplay = "start"
+anims/RESET = SubResource( 2 )
+anims/back_to_work = SubResource( 17 )
+anims/lightning_strike = SubResource( 18 )
+anims/shutup = SubResource( 16 )
+anims/sigh = SubResource( 15 )
+anims/start = SubResource( 1 )
+anims/thunder = SubResource( 14 )
+
+[node name="ConveyorPlayer" type="AnimationPlayer" parent="." index="4"]
+autoplay = "Convey"
+anims/Convey = SubResource( 8 )
+anims/RESET = SubResource( 9 )
+
+[node name="CutsceneSpriteHolder" type="Node2D" parent="." index="5"]
+position = Vector2( 160, 90 )
+
+[node name="CutsceneSprite" type="Sprite" parent="CutsceneSpriteHolder" index="0"]
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( -160, -90 )
+hframes = 4
+vframes = 3
+
+[node name="Shaker" type="Node" parent="CutsceneSpriteHolder/CutsceneSprite" index="0"]
+script = ExtResource( 14 )
+targetNode2DPath = NodePath("..")
+maxOffset = Vector2( 25, 25 )
+
+[node name="Conveyor" type="Sprite" parent="." index="6"]
+material = SubResource( 11 )
+position = Vector2( 130, 131 )
+z_index = 1
+texture = ExtResource( 6 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 2600, 6 )
+
+[node name="Bread" type="Sprite" parent="Conveyor" index="0"]
+show_behind_parent = true
+position = Vector2( -90, -25 )
+texture = ExtResource( 11 )
+
+[node name="Bread2" type="Sprite" parent="Conveyor" index="1"]
+show_behind_parent = true
+position = Vector2( 0, -25 )
+texture = ExtResource( 11 )
+
+[node name="Bread3" type="Sprite" parent="Conveyor" index="2"]
+show_behind_parent = true
+position = Vector2( 97, -25 )
+texture = ExtResource( 11 )
+
+[node name="Bread4" type="Sprite" parent="Conveyor" index="3"]
+show_behind_parent = true
+position = Vector2( -180, -25 )
+texture = ExtResource( 11 )
+
+[node name="Toaster1" type="Sprite" parent="Conveyor" index="4"]
+position = Vector2( -90, -15 )
+texture = ExtResource( 7 )
+offset = Vector2( 0, 0.5 )
+
+[node name="Sprite" type="Sprite" parent="Conveyor/Toaster1" index="0"]
+position = Vector2( 0, 3 )
+texture = ExtResource( 12 )
+
+[node name="Toaster2" type="Sprite" parent="Conveyor" index="5"]
+position = Vector2( 0, -15 )
+texture = ExtResource( 7 )
+offset = Vector2( 0, 0.5 )
+
+[node name="Sprite" type="Sprite" parent="Conveyor/Toaster2" index="0"]
+position = Vector2( 0, 3 )
+texture = ExtResource( 12 )
+
+[node name="Toaster3" type="Sprite" parent="Conveyor" index="6"]
+position = Vector2( 90, -15 )
+texture = ExtResource( 7 )
+offset = Vector2( 7, -11.5 )
+
+[node name="Handle" type="Sprite" parent="Conveyor/Toaster3" index="0"]
+position = Vector2( 7.32225, -9 )
+texture = ExtResource( 12 )
+offset = Vector2( -0.25, 0 )
+
+[node name="Toaster4" type="Sprite" parent="Conveyor" index="7"]
+position = Vector2( -180, -15 )
+texture = ExtResource( 7 )
+offset = Vector2( 0, 0.5 )
+
+[node name="Sprite" type="Sprite" parent="Conveyor/Toaster4" index="0"]
+position = Vector2( 0, 3 )
+texture = ExtResource( 12 )
+
+[node name="Polygon2D" type="Polygon2D" parent="." index="7"]
+texture = ExtResource( 10 )
+texture_offset = Vector2( 1, 1 )
+polygon = PoolVector2Array( 0, 134, 0, 180, 260, 180, 260, 134 )
+script = ExtResource( 9 )
+OutlineColour = Color( 0.2, 0.223529, 0.254902, 1 )
+TargetCollisionPoly = NodePath("")
+
+[node name="Node2D" type="Node2D" parent="." index="8"]
+position = Vector2( 284, 168 )
+
+[node name="Box" type="Sprite" parent="Node2D" index="0"]
+z_index = 2
+texture = ExtResource( 8 )
+
+[node name="Shaker" type="Node" parent="Node2D/Box" index="0"]
+script = ExtResource( 14 )
+targetNode2DPath = NodePath("..")
+maxRotation = 0.15
+maxOffset = Vector2( 7, 7 )

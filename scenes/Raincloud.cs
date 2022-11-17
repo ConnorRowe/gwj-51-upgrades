@@ -19,15 +19,15 @@ namespace Bread
         {
             get
             {
-                if (IsInsideTree() || Engine.EditorHint)
+                if (IsInsideTree())
                     return GetNode<Particles2D>("Sprite/Particles2D").Lifetime;
                 else
                     return particleLifetime;
             }
             set
             {
-                if (IsInsideTree() || Engine.EditorHint)
-                    GetNode<Particles2D>("Sprite/Particles2D").Lifetime = particleLifetime = value;
+                if (IsInsideTree())
+                    GetNode<Particles2D>("Sprite/Particles2D").Lifetime = value;
 
                 particleLifetime = value;
             }

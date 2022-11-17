@@ -7,7 +7,7 @@
 resource_local_to_scene = true
 extents = Vector2( 5, 3 )
 
-[sub_resource type="Shader" id=2]
+[sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;
 
 uniform int maxFrames;
@@ -25,7 +25,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
+shader = SubResource( 4 )
 shader_param/maxFrames = 10
 shader_param/frame = 0
 
