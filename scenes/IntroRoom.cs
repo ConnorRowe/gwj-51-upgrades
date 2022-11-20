@@ -41,8 +41,8 @@ namespace Bread
                 NextAnim();
             }
 
-            if (evt is InputEventKey ek && ek.Pressed && ek.Scancode == (int)KeyList.K)
-                NextAnim();
+            //if (evt is InputEventKey ek && ek.Pressed && ek.Scancode == (int)KeyList.K)
+            //    NextAnim();
         }
 
         public void AnimationStarted(string animation)
@@ -95,6 +95,11 @@ namespace Bread
         {
             SaveData.GameStage = 1;
             SaveData.SaveToDisk();
+        }
+
+        void ImABreadBoy()
+        {
+            World.MakeSpeechBubble("im a bread boy :)", World.Player.Head, new Vector2(0, -8));
         }
 
     }

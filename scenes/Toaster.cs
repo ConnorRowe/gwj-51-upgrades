@@ -8,6 +8,7 @@ namespace Bread
         const float CooldownTime = 1f;
 
         AnimationPlayer animationPlayer;
+        Shaker shaker;
         Vector2 playerMovePos;
         bool pushedDown = false;
         float cooldown = 0;
@@ -20,6 +21,7 @@ namespace Bread
             animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
             playerMovePos = GetNode<Position2D>("PlayerMovePos").GlobalPosition;
             Connect("body_entered", this, nameof(BodyEntered));
+            shaker = GetNode<Shaker>("Shaker");
         }
 
         public override void _Process(float delta)
@@ -69,9 +71,11 @@ namespace Bread
             pushedDown = false;
 
             animationPlayer.Play("Launch");
+            shaker.Shake(1);
             if (IsInstanceValid(player))
             {
                 player.ReleaseBodies();
+                player.ResetDoubleJump();
 
                 float inputRotate = 0f;
                 if (leftHeld)
@@ -83,6 +87,10 @@ namespace Bread
                 player.ApplyImpulse(imp);
 
                 GD.Print("Launching player with ", imp);
+
+                if (World.RNG.Randf() > .45f)
+                    World.MakeSpeechBubble("w" + new String('e', World.RNG.RandiRange(3, 8)), World.Player.Head, new Vector2(0, -8));
+
             }
         }
     }

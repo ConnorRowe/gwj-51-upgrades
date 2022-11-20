@@ -29,7 +29,7 @@ namespace Bread
             Connect("body_entered", this, nameof(BodyEntered));
         }
 
-        private void BodyEntered(Node body)
+        protected virtual void BodyEntered(Node body)
         {
             if (body is PlayerBody)
             {

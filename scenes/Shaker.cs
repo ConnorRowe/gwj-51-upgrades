@@ -15,7 +15,7 @@ namespace Bread
         private Control targetControl;
         private static OpenSimplexNoise noise = new OpenSimplexNoise()
         {
-            Seed = 13371337,
+            Seed = 071998,
             Period = 4,
             Octaves = 2
         };

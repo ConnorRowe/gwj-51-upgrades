@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://textures/metal_tile.png" type="Texture" id=1]
 [ext_resource path="res://textures/transition.png" type="Texture" id=2]
@@ -27,6 +27,10 @@
 [ext_resource path="res://textures/sourdough.png" type="Texture" id=25]
 [ext_resource path="res://scenes/WaterPool.tscn" type="PackedScene" id=26]
 [ext_resource path="res://textures/bg_4.png" type="Texture" id=27]
+[ext_resource path="res://textures/wasd_arrow.png" type="Texture" id=28]
+[ext_resource path="res://textures/explorers_badge.png" type="Texture" id=29]
+[ext_resource path="res://scenes/EndRoom.tscn" type="PackedScene" id=30]
+[ext_resource path="res://scenes/menus/PausePopup.tscn" type="PackedScene" id=31]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -68,14 +72,14 @@ extents = Vector2( 195, 109.5 )
 
 [sub_resource type="RectangleShape2D" id=3]
 resource_local_to_scene = true
-extents = Vector2( 160, 118 )
+extents = Vector2( 162.5, 118 )
 
 [sub_resource type="RectangleShape2D" id=31]
 resource_local_to_scene = true
-extents = Vector2( 160, 94.5 )
+extents = Vector2( 160, 115.5 )
 
 [sub_resource type="RectangleShape2D" id=32]
-extents = Vector2( 29.5, 21 )
+extents = Vector2( 29.5, 20.5 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 9 )
@@ -131,7 +135,7 @@ margin_right = 76.0
 margin_bottom = 178.0
 custom_colors/font_color = Color( 0.737255, 0.290196, 0.607843, 1 )
 custom_fonts/font = ExtResource( 16 )
-text = "Upgrades:"
+text = "upgrades:"
 autowrap = true
 
 [node name="PB" type="Sprite" parent="UI/Upgrades"]
@@ -149,6 +153,16 @@ position = Vector2( -74, -44 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 25 )
 offset = Vector2( 262, 92 )
+
+[node name="EB" type="Sprite" parent="UI/Upgrades"]
+visible = false
+modulate = Color( 1, 1, 1, 0.380392 )
+position = Vector2( -58, -44 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 29 )
+offset = Vector2( 262, 92 )
+
+[node name="PausePopup" parent="UI" instance=ExtResource( 31 )]
 
 [node name="RoomAreas" type="Node2D" parent="."]
 __meta__ = {
@@ -173,7 +187,7 @@ position = Vector2( 197.5, 98.5 )
 scale = Vector2( 19.75, 9.85 )
 
 [node name="Checkpoint" parent="RoomAreas/RoomArea" instance=ExtResource( 14 )]
-position = Vector2( 7, 102 )
+position = Vector2( 17, 115 )
 
 [node name="ActiveSprite" parent="RoomAreas/RoomArea/Checkpoint" index="0"]
 frame = 9
@@ -188,6 +202,10 @@ texture = ExtResource( 10 )
 
 [node name="Toaster" parent="RoomAreas/RoomArea" instance=ExtResource( 12 )]
 position = Vector2( 306, 35 )
+
+[node name="Toaster2" parent="RoomAreas/RoomArea" instance=ExtResource( 12 )]
+position = Vector2( 184, 196 )
+rotation = -1.57079
 
 [node name="StaticBody2D" type="StaticBody2D" parent="RoomAreas/RoomArea"]
 
@@ -324,6 +342,7 @@ Height = 31.77
 ParticleLifetime = 0.64
 
 [node name="Rain" parent="RoomAreas/RoomArea2/Raincloud" instance=ExtResource( 24 )]
+position = Vector2( 0, 0 )
 
 [node name="RoomArea3" parent="RoomAreas" instance=ExtResource( 8 )]
 position = Vector2( 390, 252 )
@@ -331,7 +350,7 @@ MusicTrack = ExtResource( 4 )
 BackgroundTexture = ExtResource( 23 )
 
 [node name="Bounds" parent="RoomAreas/RoomArea3" index="0"]
-position = Vector2( 160, 68 )
+position = Vector2( 157.5, 68 )
 shape = SubResource( 3 )
 
 [node name="VisibilityEnabler2D" parent="RoomAreas/RoomArea3" index="1"]
@@ -417,20 +436,44 @@ rotation = -0.261799
 position = Vector2( 11, 88 )
 rotation = 0.504664
 
+[node name="Sprite" type="Sprite" parent="RoomAreas/RoomArea3"]
+position = Vector2( 130, -8 )
+rotation = 1.87716
+z_index = -1
+texture = ExtResource( 28 )
+offset = Vector2( -11, 36.9077 )
+
+[node name="Label" type="Label" parent="RoomAreas/RoomArea3/Sprite"]
+margin_left = 3.0
+margin_top = 33.9078
+margin_right = 77.0
+margin_bottom = 52.9078
+rect_rotation = -90.0
+custom_colors/font_color = Color( 0.737255, 0.290196, 0.607843, 1 )
+custom_fonts/font = ExtResource( 16 )
+text = "???"
+autowrap = true
+
 [node name="RoomArea4" parent="RoomAreas" instance=ExtResource( 8 )]
 position = Vector2( 70, 259 )
 MusicTrack = ExtResource( 4 )
 BackgroundTexture = ExtResource( 7 )
 
 [node name="Bounds" parent="RoomAreas/RoomArea4" index="0"]
-position = Vector2( 160, 83.5 )
+position = Vector2( 160, 62.5 )
 shape = SubResource( 31 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="RoomAreas/RoomArea4"]
 
 [node name="Polygon2D" type="Polygon2D" parent="RoomAreas/RoomArea4/StaticBody2D"]
 color = Color( 0.4, 0.258824, 0.458824, 1 )
-polygon = PoolVector2Array( 320, 40, 263, 40, 263, 163, 78, 163, 58, 163, 24, 156, 15, 134, 14, 69, 37, 48, 70, 48, 70, 69, 37, 69, 37, 127.552, 44.1607, 134, 78, 134, 78, 44, 3, 44, 3, 8, 46, 8, 46, 13, 64, 13, 64, 8, 263, 8, 270, 0, 309, 0, 316, 8, 320, 8, 320, -51, -1, -54, 0, 178, 320, 179 )
+polygon = PoolVector2Array( 320, 40, 263, 40, 263, 163, 78, 163, 58, 163, 24, 156, 15, 134, 14, 69, 37, 48, 70, 48, 70, 69, 37, 69, 37, 127.552, 44.1607, 134, 78, 134, 78, 44, 3, 44, 3, 8, 46, 8, 46, 13, 64, 13, 64, 8, 263, 8, 270, 0, 309, 0, 316, 8, 320, 8, 320, -51, 310, -51, 310, -21, 274, -21, 261, -7, 242.591, -7, 239, -12, 234.915, -7, 206.126, -6.99999, 199, -13, 189.175, -6.99999, 181, -28, 174.078, -6.99999, 136.996, -6.99999, 132, -13, 127.726, -6.99999, 86.9291, -6.99999, 79, -27, 76.0663, -6.99999, 67.775, -7, 63, -18, 59.1598, -7, -1, -7, 0, 178, 320, 179 )
+script = ExtResource( 3 )
+OutlineColour = Color( 0.196078, 0.168627, 0.156863, 1 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="RoomAreas/RoomArea4/StaticBody2D"]
+color = Color( 0.4, 0.258824, 0.458824, 1 )
+polygon = PoolVector2Array( 7, -42, 54.3584, -42, 60, -31, 63.8935, -42, 71, -30, 75.8125, -42, 90.3801, -42, 96, -27, 101, -27, 107, -42, 151.034, -42, 159, -19, 167.191, -42, 209.22, -42, 215, -34, 221.567, -42, 245, -42, 267, -31, 265.283, -42, 278, -42, 276.91, -51.4027, -1, -54, -1, -42 )
 script = ExtResource( 3 )
 OutlineColour = Color( 0.196078, 0.168627, 0.156863, 1 )
 
@@ -440,6 +483,13 @@ Size = Vector2( 210, 102 )
 
 [node name="Checkpoint" parent="RoomAreas/RoomArea4" instance=ExtResource( 14 )]
 position = Vector2( 283, 7 )
+
+[node name="ActiveSprite" parent="RoomAreas/RoomArea4/Checkpoint" index="0"]
+frame = 3
+
+[node name="CollisionShape2D" parent="RoomAreas/RoomArea4/Checkpoint" index="2"]
+position = Vector2( 9, 12.5 )
+shape = SubResource( 32 )
 
 [node name="Upgrade" parent="RoomAreas/RoomArea4" instance=ExtResource( 22 )]
 position = Vector2( 22, 27 )
@@ -461,6 +511,9 @@ TargetNodePath = NodePath("../Door")
 position = Vector2( 12, 122 )
 Size = Vector2( 66, 40 )
 
+[node name="Checkpoint2" parent="RoomAreas/RoomArea4" instance=ExtResource( 14 )]
+position = Vector2( 21, -32 )
+
 [node name="RoomArea5" parent="RoomAreas" instance=ExtResource( 8 )]
 position = Vector2( 710, 208 )
 MusicTrack = ExtResource( 4 )
@@ -470,26 +523,109 @@ BackgroundTexture = ExtResource( 27 )
 
 [node name="Polygon2D3" type="Polygon2D" parent="RoomAreas/RoomArea5/StaticBody2D"]
 color = Color( 0.231373, 0.0901961, 0.145098, 1 )
-polygon = PoolVector2Array( 0, 163, 1, 186, 320, 185, 320, 2, 0, 2, 0, 142, 11, 138, 12, 14, 126, 15, 307, 15, 307, 37, 128, 37, 122, 58, 86, 57, 80.8173, 36.1465, 42, 36, 42, 138, 178, 101, 178, 122 )
+polygon = PoolVector2Array( 0, 163, 1, 186, 320, 185, 320, 2, 0, 2, 0, 142, 11, 138, 12, 14, 126, 15, 166, 15, 186, 65, 228, 64, 261.224, 15, 307, 15, 307, 57, 267, 57, 257.971, 99.9802, 295, 177, 118, 179, 156.418, 92.0512, 138.639, 35.907, 128, 37, 122, 58, 86, 57, 80.8173, 36.1465, 42, 36, 42, 138 )
 script = ExtResource( 3 )
 OutlineColour = Color( 0.0784314, 0.0627451, 0.0745098, 1 )
 
+[node name="Upgrade" parent="RoomAreas/RoomArea5" instance=ExtResource( 22 )]
+position = Vector2( 290, 37 )
+GameStage = 4
+UpgradeName = "explorer's badge"
+UpgradeDesc = "doesnt really do anything, but you look slightly cooler i suppose"
+
+[node name="Sprite" parent="RoomAreas/RoomArea5/Upgrade" index="0"]
+position = Vector2( -2, 3 )
+texture = ExtResource( 29 )
+
+[node name="WaterPool" parent="RoomAreas/RoomArea5" instance=ExtResource( 26 )]
+position = Vector2( 120, 125 )
+Size = Vector2( 178, 52 )
+
 [node name="Checkpoint" parent="RoomAreas/RoomArea5" instance=ExtResource( 14 )]
-position = Vector2( 95, 25 )
+position = Vector2( 98, 32 )
 
-[node name="ActiveSprite" parent="RoomAreas/RoomArea5/Checkpoint" index="0"]
-frame = 7
+[node name="RoomArea6" parent="RoomAreas" instance=ExtResource( 8 )]
+position = Vector2( -249, 206 )
+MusicTrack = ExtResource( 4 )
+BackgroundTexture = ExtResource( 19 )
 
-[node name="CollisionShape2D" parent="RoomAreas/RoomArea5/Checkpoint" index="2"]
-position = Vector2( 9, 12 )
-shape = SubResource( 32 )
+[node name="StaticBody2D" type="StaticBody2D" parent="RoomAreas/RoomArea6"]
+
+[node name="Polygon2D" type="Polygon2D" parent="RoomAreas/RoomArea6/StaticBody2D"]
+position = Vector2( 221, 97 )
+color = Color( 0.352941, 0.305882, 0.266667, 1 )
+polygon = PoolVector2Array( -222, -49.3477, -223, 90, 98, 91, 99, -51, 94, -51, 94, 77, -219, 78, -219, -49.3477 )
+script = ExtResource( 3 )
+OutlineColour = Color( 0.133333, 0.109804, 0.101961, 1 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="RoomAreas/RoomArea6/StaticBody2D"]
+position = Vector2( 221, 97 )
+color = Color( 0.352941, 0.305882, 0.266667, 1 )
+polygon = PoolVector2Array( 97, -86, 97, -96, -10.4579, -96.3369, -4, -184, -222, -184, -222, -94, 95, -93, 95, -86 )
+script = ExtResource( 3 )
+OutlineColour = Color( 0.133333, 0.109804, 0.101961, 1 )
+
+[node name="Toaster" parent="RoomAreas/RoomArea6" instance=ExtResource( 12 )]
+position = Vector2( 265, 160 )
+rotation = -0.523598
+
+[node name="Toaster2" parent="RoomAreas/RoomArea6" instance=ExtResource( 12 )]
+position = Vector2( 126, 125 )
+rotation = 0.523598
+
+[node name="Toaster3" parent="RoomAreas/RoomArea6" instance=ExtResource( 12 )]
+position = Vector2( 230, 83 )
+rotation = -1.0472
+
+[node name="Toaster4" parent="RoomAreas/RoomArea6" instance=ExtResource( 12 )]
+position = Vector2( 78, 92 )
+rotation = 0.785397
+
+[node name="Toaster5" parent="RoomAreas/RoomArea6" instance=ExtResource( 12 )]
+position = Vector2( 228, 20 )
+rotation = -2.09439
+
+[node name="Toaster6" parent="RoomAreas/RoomArea6" instance=ExtResource( 12 )]
+position = Vector2( 255, 15 )
+rotation = -3.14159
+
+[node name="Sprite" type="Sprite" parent="RoomAreas/RoomArea6"]
+position = Vector2( 65, 9 )
+rotation = 0.785397
+z_index = -1
+texture = ExtResource( 28 )
+offset = Vector2( -11, 36.9077 )
+
+[node name="Label" type="Label" parent="RoomAreas/RoomArea6/Sprite"]
+margin_left = 3.0
+margin_top = 33.9078
+margin_right = 77.0
+margin_bottom = 52.9078
+rect_rotation = -90.0
+custom_colors/font_color = Color( 0.737255, 0.290196, 0.607843, 1 )
+custom_fonts/font = ExtResource( 16 )
+text = "???"
+autowrap = true
+
+[node name="EndRoom" parent="RoomAreas" instance=ExtResource( 30 )]
+position = Vector2( -571, 205 )
+BackgroundTexture = ExtResource( 19 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="RoomAreas/EndRoom"]
+
+[node name="Polygon2D" type="Polygon2D" parent="RoomAreas/EndRoom/StaticBody2D"]
+position = Vector2( 221, 97 )
+color = Color( 0.2, 0.223529, 0.254902, 1 )
+polygon = PoolVector2Array( -228, -98, -226, 95, 99, 91, 99, -47, 94, -35, 94, 80, -221, 81, -222, -97 )
+script = ExtResource( 3 )
+OutlineColour = Color( 0.133333, 0.109804, 0.101961, 1 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 0, 2 )
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
 color = Color( 0.278431, 0.490196, 0.521569, 1 )
-polygon = PoolVector2Array( -21, -33, 358, -28, 462.827, -24.3147, 463.415, -1.03116, 352.901, -0.320114, 337, 86, 318, 94, 317, 2, 18, 2, 18, -6, -8, -6, -8, 26, 0, 26, 0, 105, -4, 105, -4, 127, 0, 127, 0, 177, 260, 177, 316, 177, 316, 134, 334, 134, 334, 157, 460, 157, 460, 134, 463, 130, 497, 130, 500, 134, 500, 157, 599.029, 157.9, 603.186, 162.189, 603, 190, 666, 190, 666, 163, 670, 159, 683, 159, 683, 207, 603.176, 207.114, -37, 204 )
+polygon = PoolVector2Array( -21, -33, 358, -28, 462.827, -24.3147, 463.415, -1.03116, 352.901, -0.320114, 337, 86, 318, 94, 317, 2, 18, 2, 18, -6, -8, -6, -8, 26, 0, 26, 0, 105, -4, 105, -4, 127, 0, 127, 0, 177, 260, 177, 316, 177, 316, 134, 334, 134, 348, 157, 460, 157, 460, 134, 463, 130, 497, 130, 500, 134, 500, 157, 599.029, 157.9, 603.186, 162.189, 603, 190, 666, 190, 666, 163, 670, 159, 683, 159, 683, 207, 603.176, 207.114, 496.148, 206.593, 496, 201, 513, 201, 513, 187, 496, 187, 496, 179, 472, 179, 471.979, 184.501, 367, 185, 345, 206, -37, 204 )
 script = ExtResource( 3 )
 OutlineColour = Color( 0.0705882, 0.12549, 0.12549, 1 )
 
@@ -505,6 +641,12 @@ polygon = PoolVector2Array( 697, 127.254, 645, 127, 645, 170, 631, 170, 630.878,
 script = ExtResource( 3 )
 OutlineColour = Color( 0.0705882, 0.12549, 0.12549, 1 )
 
+[node name="Polygon2D4" type="Polygon2D" parent="StaticBody2D"]
+color = Color( 0.278431, 0.490196, 0.521569, 1 )
+polygon = PoolVector2Array( 380, 207, 380, 200, 465, 200, 465, 207 )
+script = ExtResource( 3 )
+OutlineColour = Color( 0.0705882, 0.12549, 0.12549, 1 )
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 160, 90 )
 current = true
@@ -516,5 +658,6 @@ process_mode = 0
 [editable path="RoomAreas/RoomArea2/PBUpgrade"]
 [editable path="RoomAreas/RoomArea3"]
 [editable path="RoomAreas/RoomArea4"]
+[editable path="RoomAreas/RoomArea4/Checkpoint"]
 [editable path="RoomAreas/RoomArea4/Upgrade"]
-[editable path="RoomAreas/RoomArea5/Checkpoint"]
+[editable path="RoomAreas/RoomArea5/Upgrade"]

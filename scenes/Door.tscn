@@ -6,6 +6,7 @@
 [ext_resource path="res://shaders/YCutOff.shader" type="Shader" id=4]
 
 [sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/invert = true
 shader_param/y_cutoff_pos = 0.0

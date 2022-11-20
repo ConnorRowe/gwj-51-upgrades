@@ -213,6 +213,18 @@ tracks/12/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
+tracks/13/type = "value"
+tracks/13/path = NodePath("CanvasLayer/LightningFlash:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=17]
 resource_name = "back_to_work"
@@ -362,14 +374,17 @@ tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 2, 2.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 2, 2.5, 3.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "SpawnPlayer"
 }, {
 "args": [  ],
 "method": "IntroFinished"
+}, {
+"args": [  ],
+"method": "ImABreadBoy"
 } ]
 }
 tracks/10/type = "audio"
@@ -518,6 +533,18 @@ tracks/6/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("CanvasLayer/LightningFlash:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 5.7, 5.75 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
 }
 
 [sub_resource type="Animation" id=16]
@@ -1116,11 +1143,17 @@ margin_right = -36.0
 margin_bottom = -87.0
 BoxColour = Color( 0.45098, 0.0901961, 0.176471, 1 )
 
-[node name="PressSpaceToCont" type="AnimatedSprite" parent="CanvasLayer" index="2"]
+[node name="LightningFlash" type="ColorRect" parent="CanvasLayer" index="2"]
+visible = false
+modulate = Color( 1, 1, 1, 0.501961 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="PressSpaceToCont" type="AnimatedSprite" parent="CanvasLayer" index="3"]
 visible = false
 position = Vector2( 304, 8 )
 frames = SubResource( 7 )
-frame = 2
+frame = 3
 playing = true
 offset = Vector2( 0.5, 0.5 )
 
@@ -1335,5 +1368,6 @@ position = Vector2( 284, 170 )
 shape = SubResource( 26 )
 
 [node name="ThunderPlayer" type="AudioStreamPlayer" parent="." index="13"]
+stream = ExtResource( 19 )
 volume_db = -7.866
 bus = "SFX"

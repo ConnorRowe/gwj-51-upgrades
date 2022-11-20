@@ -1,0 +1,73 @@
+[gd_resource type="Theme" load_steps=16 format=2]
+
+[ext_resource path="res://font/NormalNoOutline.tres" type="DynamicFont" id=1]
+[ext_resource path="res://textures/btn_click.png" type="Texture" id=2]
+[ext_resource path="res://textures/btn_hover.png" type="Texture" id=3]
+[ext_resource path="res://textures/btn_normal.png" type="Texture" id=4]
+[ext_resource path="res://textures/btn_disabled.png" type="Texture" id=5]
+[ext_resource path="res://textures/toggle_off.png" type="Texture" id=6]
+[ext_resource path="res://textures/toggle_on.png" type="Texture" id=7]
+[ext_resource path="res://textures/grabber.png" type="Texture" id=8]
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 16, 15 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 16, 15 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 16, 15 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 16, 15 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.976471, 0.639216, 0.105882, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.976471, 0.639216, 0.105882, 0.760784 )
+border_color = Color( 1, 1, 1, 0.333333 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.141176, 0.321569, 0.231373, 1 )
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.0705882, 0.12549, 0.12549, 1 )
+
+[resource]
+default_font = ExtResource( 1 )
+Button/styles/disabled = SubResource( 4 )
+Button/styles/focus = SubResource( 1 )
+Button/styles/hover = SubResource( 2 )
+Button/styles/normal = SubResource( 1 )
+Button/styles/pressed = SubResource( 3 )
+CheckButton/icons/off = ExtResource( 6 )
+CheckButton/icons/on = ExtResource( 7 )
+HSlider/icons/grabber = ExtResource( 8 )
+HSlider/icons/grabber_highlight = ExtResource( 8 )
+HSlider/styles/grabber_area = SubResource( 5 )
+HSlider/styles/grabber_area_highlight = SubResource( 7 )
+HSlider/styles/slider = SubResource( 6 )

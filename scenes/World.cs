@@ -21,10 +21,11 @@ namespace Bread
         static PackedScene playerScene = GD.Load<PackedScene>("res://scenes/Player.tscn");
         static PackedScene smokePuffScene = GD.Load<PackedScene>("res://scenes/SmokePuff.tscn");
         static PackedScene bigCrumbsScene = GD.Load<PackedScene>("res://scenes/BigCrumbs.tscn");
-        static RandomNumberGenerator rng = new RandomNumberGenerator();
+        static PackedScene speechBubbleScene = GD.Load<PackedScene>("res://scenes/SpeechBubble.tscn");
+        public static RandomNumberGenerator RNG { get; private set; } = new RandomNumberGenerator();
         static World()
         {
-            rng.Randomize();
+            RNG.Randomize();
         }
 
         public static Player Player { get; private set; } = null;
@@ -82,7 +83,7 @@ namespace Bread
 
         public override void _Input(InputEvent evt)
         {
-            if (evt.IsActionReleased("reset"))
+            if (IsInstanceValid(Player) && !Player.InputLocked && evt.IsActionReleased("reset"))
             {
                 KillPlayer(DeathType.RESET);
             }
@@ -94,7 +95,8 @@ namespace Bread
                 INSTANCE.GetNode<Sprite>("UI/Upgrades/PB").Visible = true;
             if (gameStage >= 3)
                 INSTANCE.GetNode<Sprite>("UI/Upgrades/SD").Visible = true;
-
+            if (gameStage >= 3)
+                INSTANCE.GetNode<Sprite>("UI/Upgrades/EB").Visible = true;
         }
 
         public static void MoveCameraToRoom(RoomArea roomArea, bool instant = false)
@@ -224,6 +226,12 @@ namespace Bread
             INSTANCE.ResetPlayerToCheckpoint();
             Sounds.Die();
             INSTANCE.DeathMSG(deathType);
+
+            if (deathType != DeathType.RESET)
+            {
+                if (RNG.Randf() > .4f)
+                    MakeSpeechBubble(RNG.Randf() > .5f ? ":'(" : ":(", Player.Head, new Vector2(0, -8));
+            }
         }
 
         void ResetPlayerToCheckpoint()
@@ -236,7 +244,7 @@ namespace Bread
 
         void DeathMSG(DeathType deathType)
         {
-            deathMSG.Text = deathMessages[deathType][rng.RandiRange(0, deathMessages[deathType].Length - 1)];
+            deathMSG.Text = deathMessages[deathType][RNG.RandiRange(0, deathMessages[deathType].Length - 1)];
 
             if (deathTween != null)
             {
@@ -258,6 +266,15 @@ namespace Bread
             deathScaleBack.From(Vector2.One);
 
             deathMSGShaker.Shake(1);
+        }
+
+        public static void MakeSpeechBubble(string text, Node2D followNode, Vector2 offset)
+        {
+            var speechBubble = speechBubbleScene.Instance<SpeechBubble>();
+            speechBubble.SetText(text);
+            speechBubble.FollowNode = followNode;
+            speechBubble.Offset = offset;
+            INSTANCE.AddChild(speechBubble);
         }
     }
 }

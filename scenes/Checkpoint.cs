@@ -20,12 +20,14 @@ namespace Bread
         }
         AnimatedSprite activeSprite;
         Sprite inactiveSprite;
+        Shaker shaker;
 
         public override void _Ready()
         {
             activeSprite = GetNode<AnimatedSprite>("ActiveSprite");
             inactiveSprite = GetNode<Sprite>("InactiveSprite");
             Connect("body_entered", this, nameof(BodyEntered));
+            shaker = GetNode<Shaker>("Shaker");
         }
 
         void BodyEntered(Node body)
@@ -36,6 +38,8 @@ namespace Bread
                 World.CheckpointActivated(this);
                 World.MakeSmokePuff(GlobalPosition);
                 Sounds.Checkpoint();
+                World.MakeSpeechBubble("im a bread boy :)", World.Player.Head, new Vector2(0, -8));
+                shaker.Shake(1);
             }
         }
 

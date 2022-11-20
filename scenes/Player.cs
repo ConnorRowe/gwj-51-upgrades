@@ -22,6 +22,8 @@ namespace Bread
         Particles2D crumbsMed;
         Particles2D crumbsHigh;
 
+        public PlayerBody Head { get { return mainBodies[0]; } }
+
         float impulsePower = 800;
         int partsOnGround = 0;
         float impulseCooldown = 1f;
@@ -35,8 +37,10 @@ namespace Bread
         float wetness = 0f;
         Vector2 dampJump = new Vector2(-.65f, -.65f);
 
+        public bool InputLocked { get; set; } = false;
         public bool HasPeanutButterUpgrade { get; private set; } = false;
         private bool hasSourdoughUpgrade = false;
+        private bool hasBadgeUpgrade = false;
 
         public override void _Ready()
         {
@@ -70,6 +74,10 @@ namespace Bread
             if (SaveData.GameStage >= 3)
             {
                 SourdoughUpgrade();
+            }
+            if (SaveData.GameStage >= 4)
+            {
+                BadgeUpgrade();
             }
         }
 
@@ -154,19 +162,22 @@ namespace Bread
 
         public override void _Input(InputEvent evt)
         {
+            if (InputLocked)
+                return;
+
             if (hasSourdoughUpgrade && canDoubleJump && partsOnGround <= 1)
             {
                 bool doubleJumped = false;
                 if (evt.IsActionPressed("jump_left"))
                 {
-                    Vector2 impulse = new Vector2(-.25f, -.75f) * impulsePower;
+                    Vector2 impulse = new Vector2(-.75f, -.25f) * impulsePower;
                     mainBodies[0].ApplyImpulse(new Vector2(1, 1), impulse);
                     mainBodies[5].ApplyImpulse(new Vector2(1, 1), impulse);
                     doubleJumped = true;
                 }
                 else if (evt.IsActionPressed("jump_right"))
                 {
-                    Vector2 impulse = new Vector2(.25f, -.75f) * impulsePower;
+                    Vector2 impulse = new Vector2(.75f, -.25f) * impulsePower;
                     mainBodies[0].ApplyImpulse(new Vector2(-1, 1), impulse);
                     mainBodies[5].ApplyImpulse(new Vector2(-1, 1), impulse);
                     doubleJumped = true;
@@ -340,6 +351,18 @@ namespace Bread
         public void SourdoughUpgrade()
         {
             hasSourdoughUpgrade = true;
+        }
+
+        public void BadgeUpgrade()
+        {
+            hasBadgeUpgrade = true;
+
+            GetNode<Sprite>("Middle3/Badge").Visible = true;
+        }
+
+        public void ResetDoubleJump()
+        {
+            canDoubleJump = true;
         }
 
     }

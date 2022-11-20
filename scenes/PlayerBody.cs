@@ -27,6 +27,9 @@ namespace Bread
 
         public override void _Input(InputEvent evt)
         {
+            if (player.InputLocked)
+                return;
+
             if (isUnderwater && player.HasPeanutButterUpgrade && canSwim)
             {
                 var swimDir = Vector2.Zero;

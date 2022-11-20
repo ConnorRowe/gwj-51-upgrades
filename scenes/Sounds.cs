@@ -12,6 +12,7 @@ namespace Bread
         static AudioStreamPlayer upgradePlayer;
         static AudioStreamPlayer checkpointPlayer;
         static AudioStreamPlayer diePlayer;
+        
         public override void _Ready()
         {
             base._Ready();
@@ -51,7 +52,7 @@ namespace Bread
 
         public static void PlayMusic(AudioStreamOGGVorbis track)
         {
-            if (musicPlayer.Stream != track)
+            if (musicPlayer.Stream != track || !musicPlayer.Playing)
             {
                 musicPlayer.Stream = track;
                 musicPlayer.Play();

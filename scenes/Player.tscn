@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://textures/eye.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Player.cs" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://textures/pupil.png" type="Texture" id=5]
 [ext_resource path="res://shaders/Player.shader" type="Shader" id=6]
 [ext_resource path="res://shaders/CrumbsShaderMat.tres" type="Material" id=7]
+[ext_resource path="res://textures/mini_badge.png" type="Texture" id=8]
 
 [sub_resource type="ShaderMaterial" id=3]
 resource_local_to_scene = true
@@ -102,6 +103,12 @@ script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middle3"]
 shape = SubResource( 1 )
+
+[node name="Badge" type="Sprite" parent="Middle3"]
+visible = false
+position = Vector2( 1, 1 )
+z_index = 1
+texture = ExtResource( 8 )
 
 [node name="Middle4" type="RigidBody2D" parent="." groups=["BreadMain"]]
 position = Vector2( 0, 2 )

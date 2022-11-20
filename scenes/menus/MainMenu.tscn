@@ -1,0 +1,118 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://MainTheme.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/menus/MainMenu.cs" type="Script" id=2]
+[ext_resource path="res://scenes/menus/Settings.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/MyButton.cs" type="Script" id=4]
+[ext_resource path="res://textures/logo.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.141176, 0.133333, 0.203922, 1 )
+
+[node name="Main" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Main"]
+margin_left = 36.0
+margin_right = 283.0
+margin_bottom = 117.0
+size_flags_horizontal = 4
+texture = ExtResource( 5 )
+
+[node name="Continue" type="Button" parent="Main"]
+margin_left = 120.0
+margin_top = 117.0
+margin_right = 200.0
+margin_bottom = 134.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 6
+size_flags_vertical = 2
+disabled = true
+text = "continue"
+script = ExtResource( 4 )
+
+[node name="NewGame" type="Button" parent="Main"]
+margin_left = 120.0
+margin_top = 138.0
+margin_right = 200.0
+margin_bottom = 155.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 6
+size_flags_vertical = 2
+text = "new game"
+script = ExtResource( 4 )
+
+[node name="Settings" type="Button" parent="Main"]
+margin_left = 120.0
+margin_top = 159.0
+margin_right = 200.0
+margin_bottom = 176.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 6
+size_flags_vertical = 2
+text = "settings"
+script = ExtResource( 4 )
+
+[node name="Settings" type="VBoxContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Settings"]
+margin_right = 320.0
+custom_constants/separation = -4
+custom_styles/separator = SubResource( 1 )
+
+[node name="Label" type="Label" parent="Settings"]
+margin_top = 4.0
+margin_right = 320.0
+margin_bottom = 12.0
+custom_colors/font_color = Color( 1, 0.835294, 0.254902, 1 )
+text = "Settings"
+align = 1
+valign = 1
+
+[node name="Settings" parent="Settings" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 16.0
+margin_right = 320.0
+margin_bottom = 141.0
+
+[node name="Back" type="Button" parent="Settings"]
+margin_left = 120.0
+margin_top = 145.0
+margin_right = 200.0
+margin_bottom = 162.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 6
+size_flags_vertical = 2
+text = "Back"
+script = ExtResource( 4 )
+
+[node name="Credit" type="Label" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -166.0
+margin_top = 136.0
+margin_right = -3.0
+margin_bottom = 177.0
+text = "by connor magson
+for godot wild jam 51
+theme: upgrades
+wildcards used: fury of the storm, bread"
+align = 2
