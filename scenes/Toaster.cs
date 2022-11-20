@@ -69,19 +69,21 @@ namespace Bread
             pushedDown = false;
 
             animationPlayer.Play("Launch");
+            if (IsInstanceValid(player))
+            {
+                player.ReleaseBodies();
 
-            player.ReleaseBodies();
+                float inputRotate = 0f;
+                if (leftHeld)
+                    inputRotate -= 1f;
+                if (rightHeld)
+                    inputRotate += 1f;
 
-            float inputRotate = 0f;
-            if (leftHeld)
-                inputRotate -= 1f;
-            if (rightHeld)
-                inputRotate += 1f;
+                var imp = Vector2.Up.Rotated(Rotation).Rotated(inputRotate * Mathf.Pi * .0625f) * 500f;
+                player.ApplyImpulse(imp);
 
-            var imp = Vector2.Up.Rotated(Rotation).Rotated(inputRotate * Mathf.Pi * .0625f) * 500f;
-            player.ApplyImpulse(imp);
-
-            GD.Print("Launching player with ", imp);
+                GD.Print("Launching player with ", imp);
+            }
         }
     }
 }

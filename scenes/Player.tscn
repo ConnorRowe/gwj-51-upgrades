@@ -9,6 +9,7 @@
 [ext_resource path="res://shaders/CrumbsShaderMat.tres" type="Material" id=7]
 
 [sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
 shader = ExtResource( 6 )
 shader_param/outline = Color( 0.443137, 0.254902, 0.231373, 1 )
 shader_param/fill1 = Color( 0.858824, 0.643137, 0.388235, 1 )
@@ -67,6 +68,9 @@ margin_top = -11.0
 margin_right = 36.0
 margin_bottom = 3.0
 custom_fonts/font = ExtResource( 3 )
+
+[node name="Listener2D" type="Listener2D" parent="Middle1"]
+current = true
 
 [node name="Middle2" type="RigidBody2D" parent="." groups=["BreadMain"]]
 position = Vector2( 0, -2 )

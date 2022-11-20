@@ -3,7 +3,11 @@ using Godot;
 namespace Bread
 {
     public class RoomArea : Area2D
-    {//Vector2 position, float limitLeft, float limitTop, float limitRight, float limitBottom
+    {
+        [Export]
+        public AudioStreamOGGVorbis MusicTrack { get; set; } = null;
+        [Export]
+        public Texture BackgroundTexture { get; set; }
         public Vector2 RoomPosition { get; private set; }
         public int LimitLeft { get; private set; }
         public int LimitTop { get; private set; }
@@ -30,6 +34,8 @@ namespace Bread
             if (body is PlayerBody)
             {
                 World.MoveCameraToRoom(this);
+
+                Sounds.PlayMusic(MusicTrack);
             }
         }
     }

@@ -1,10 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/Sounds.cs" type="Script" id=1]
 [ext_resource path="res://audio/sfx/blip.wav" type="AudioStream" id=2]
 [ext_resource path="res://audio/sfx/soft_slap.wav" type="AudioStream" id=3]
 [ext_resource path="res://audio/sfx/med_slap.wav" type="AudioStream" id=4]
 [ext_resource path="res://audio/sfx/hard_slap.wav" type="AudioStream" id=5]
+[ext_resource path="res://audio/music/mainmenu.ogg" type="AudioStream" id=6]
+[ext_resource path="res://audio/sfx/die.wav" type="AudioStream" id=7]
+[ext_resource path="res://audio/sfx/checkpoint.wav" type="AudioStream" id=8]
+[ext_resource path="res://audio/sfx/lootget.ogg" type="AudioStream" id=9]
 
 [sub_resource type="AudioStreamRandomPitch" id=1]
 audio_stream = ExtResource( 2 )
@@ -22,6 +26,15 @@ random_pitch = 1.25
 audio_stream = ExtResource( 5 )
 random_pitch = 1.3
 
+[sub_resource type="AudioStreamRandomPitch" id=5]
+audio_stream = ExtResource( 8 )
+
+[sub_resource type="AudioStreamRandomPitch" id=6]
+audio_stream = ExtResource( 7 )
+
+[sub_resource type="AudioStreamRandomPitch" id=7]
+audio_stream = ExtResource( 9 )
+
 [node name="Sounds" type="Node"]
 script = ExtResource( 1 )
 
@@ -32,14 +45,32 @@ bus = "SFX"
 [node name="SoftSlap" type="AudioStreamPlayer" parent="."]
 stream = SubResource( 2 )
 volume_db = -5.243
-bus = "SFX"
+bus = "SFX_Reverb"
 
 [node name="MedSlap" type="AudioStreamPlayer" parent="."]
 stream = SubResource( 3 )
 volume_db = -1.748
-bus = "SFX"
+bus = "SFX_Reverb"
 
 [node name="HardSlap" type="AudioStreamPlayer" parent="."]
 stream = SubResource( 4 )
 volume_db = 0.864
-bus = "SFX"
+bus = "SFX_Reverb"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+bus = "Music"
+
+[node name="CheckpointPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 5 )
+volume_db = -16.0
+bus = "SFX_Reverb"
+
+[node name="DiePlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 6 )
+bus = "SFX_Reverb"
+
+[node name="UpgradePlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 7 )
+volume_db = -6.4
+bus = "SFX_Reverb"

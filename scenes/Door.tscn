@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://textures/door_door.png" type="Texture" id=1]
+[ext_resource path="res://textures/door_top.png" type="Texture" id=2]
+[ext_resource path="res://scenes/Door.cs" type="Script" id=3]
+[ext_resource path="res://shaders/YCutOff.shader" type="Shader" id=4]
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 4 )
+shader_param/invert = true
+shader_param/y_cutoff_pos = 0.0
+shader_param/global_transform = null
+
+[sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
+extents = Vector2( 7, 15.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 9, 3.5 )
+
+[node name="Door" type="StaticBody2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( -9, 0 )
+
+[node name="DoorBody" type="KinematicBody2D" parent="."]
+show_behind_parent = true
+motion/sync_to_physics = true
+
+[node name="Sprite" type="Sprite" parent="DoorBody"]
+material = SubResource( 3 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( -7, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorBody"]
+position = Vector2( 0, 15.5 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 3.5 )
+shape = SubResource( 2 )

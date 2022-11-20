@@ -1,10 +1,10 @@
 [gd_resource type="DynamicFont" load_steps=2 format=2]
 
-[sub_resource type="DynamicFontData" id=7]
+[sub_resource type="DynamicFontData" id=28]
 font_path = "res://font/ConsFont_v2.ttf"
 
 [resource]
 size = 8
 outline_color = Color( 0.913725, 0.709804, 0.639216, 1 )
 use_mipmaps = true
-font_data = SubResource( 7 )
+font_data = SubResource( 28 )

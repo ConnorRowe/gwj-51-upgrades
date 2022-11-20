@@ -6,6 +6,7 @@ namespace Bread
     {
         RigidBody2D plate;
         ShaderMaterial plateShader;
+        AudioStreamPlayer2D audioStreamPlayer2D;
         bool triggered = false;
 
         [Export]
@@ -17,8 +18,9 @@ namespace Bread
         {
             plate = GetNode<RigidBody2D>("PlateBody");
             plateShader = GetNode<Sprite>("PlateBody/Sprite").Material as ShaderMaterial;
-            plateShader.SetShaderParam("y_cutoff_pos", Position.y);
+            plateShader.SetShaderParam("y_cutoff_pos", GlobalPosition.y);
             target = GetNodeOrNull<IButtonInteractive>(TargetNodePath);
+            audioStreamPlayer2D = GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D");
         }
 
         public override void _PhysicsProcess(float delta)
@@ -39,6 +41,7 @@ namespace Bread
         {
             triggered = true;
             target.ButtonInteract();
+            audioStreamPlayer2D.Play();
         }
 
         private void Reset()

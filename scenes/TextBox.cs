@@ -4,6 +4,9 @@ namespace Bread
 {
     public class TextBox : NinePatchRect
     {
+        [Export]
+        public Color BoxColour { get; set; } = Colors.White;
+
         RichTextLabel richTextLabel;
         public string BBCode
         {
@@ -26,6 +29,8 @@ namespace Bread
         public override void _Ready()
         {
             richTextLabel = GetNode<RichTextLabel>("RichTextLabel");
+
+            SelfModulate = BoxColour;
         }
 
         public override void _Process(float delta)

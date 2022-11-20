@@ -25,11 +25,18 @@ namespace Bread
         float impulsePower = 800;
         int partsOnGround = 0;
         float impulseCooldown = 1f;
+        float[] timesSinceJumps = new float[3] { 0f, 0f, 0f };
+        Vector2[] lastImpulses = new Vector2[3] { Vector2.Zero, Vector2.Zero, Vector2.Zero };
+        bool canDoubleJump = true;
 
         bool queueFreeze = false;
         bool queueUnfreeze = false;
         bool isWet = false;
         float wetness = 0f;
+        Vector2 dampJump = new Vector2(-.65f, -.65f);
+
+        public bool HasPeanutButterUpgrade { get; private set; } = false;
+        private bool hasSourdoughUpgrade = false;
 
         public override void _Ready()
         {
@@ -54,6 +61,15 @@ namespace Bread
                 {
                     mainBodies[bodyCount++] = (PlayerBody)child;
                 }
+            }
+
+            if (SaveData.GameStage >= 2)
+            {
+                PeanutButterUpgrade();
+            }
+            if (SaveData.GameStage >= 3)
+            {
+                SourdoughUpgrade();
             }
         }
 
@@ -81,9 +97,12 @@ namespace Bread
 
             if (isWet && wetness < 1f)
             {
-                wetness += delta;
+                wetness += HasPeanutButterUpgrade ? delta * .3f : delta;
                 if (wetness > 1f)
+                {
                     wetness = 1f;
+                    World.KillPlayer(World.DeathType.WATER);
+                }
             }
             else if (wetness > 0f)
             {
@@ -99,6 +118,16 @@ namespace Bread
             crumbsLow.Emitting = speed >= 500 && speed < 5000;
             crumbsMed.Emitting = speed >= 5000 && speed < 16000;
             crumbsHigh.Emitting = speed > 16000;
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (timesSinceJumps[i] > 0)
+                {
+                    timesSinceJumps[i] -= delta;
+                    if (timesSinceJumps[i] < 0)
+                        timesSinceJumps[i] = 0;
+                }
+            }
         }
 
         public override void _Draw()
@@ -125,9 +154,44 @@ namespace Bread
 
         public override void _Input(InputEvent evt)
         {
+            if (hasSourdoughUpgrade && canDoubleJump && partsOnGround <= 1)
+            {
+                bool doubleJumped = false;
+                if (evt.IsActionPressed("jump_left"))
+                {
+                    Vector2 impulse = new Vector2(-.25f, -.75f) * impulsePower;
+                    mainBodies[0].ApplyImpulse(new Vector2(1, 1), impulse);
+                    mainBodies[5].ApplyImpulse(new Vector2(1, 1), impulse);
+                    doubleJumped = true;
+                }
+                else if (evt.IsActionPressed("jump_right"))
+                {
+                    Vector2 impulse = new Vector2(.25f, -.75f) * impulsePower;
+                    mainBodies[0].ApplyImpulse(new Vector2(-1, 1), impulse);
+                    mainBodies[5].ApplyImpulse(new Vector2(-1, 1), impulse);
+                    doubleJumped = true;
+                }
+                else if (evt.IsActionPressed("jump_up"))
+                {
+                    Vector2 impulse = Vector2.Up * impulsePower;
+                    mainBodies[0].ApplyImpulse(Vector2.Zero, impulse);
+                    mainBodies[5].ApplyImpulse(Vector2.Zero, impulse);
+                    doubleJumped = true;
+                }
+
+                if (doubleJumped)
+                {
+                    World.MakeBigCrumbs(mainBodies[3].GlobalPosition);
+                    canDoubleJump = false;
+                }
+
+            }
+
             if (evt.IsActionPressed("jump_left"))
             {
                 Vector2 impulse = new Vector2(-.25f, -.75f) * GetImpulsePower() * impulseCooldown;
+                lastImpulses[0] = impulse;
+                timesSinceJumps[0] = impulseCooldown * .5f;
                 impulseCooldown = 0f;
                 mainBodies[0].ApplyImpulse(new Vector2(1, 1), impulse);
                 mainBodies[5].ApplyImpulse(new Vector2(1, 1), impulse);
@@ -137,6 +201,8 @@ namespace Bread
             if (evt.IsActionPressed("jump_right"))
             {
                 Vector2 impulse = new Vector2(.25f, -.75f) * GetImpulsePower() * impulseCooldown;
+                lastImpulses[1] = impulse;
+                timesSinceJumps[1] = impulseCooldown * .5f;
                 impulseCooldown = 0f;
                 mainBodies[0].ApplyImpulse(new Vector2(-1, 1), impulse);
                 mainBodies[5].ApplyImpulse(new Vector2(-1, 1), impulse);
@@ -145,7 +211,30 @@ namespace Bread
             if (evt.IsActionPressed("jump_up"))
             {
                 Vector2 impulse = Vector2.Up * GetImpulsePower() * impulseCooldown;
+                lastImpulses[2] = impulse;
+                timesSinceJumps[2] = impulseCooldown * .5f;
                 impulseCooldown = 0f;
+                mainBodies[0].ApplyImpulse(Vector2.Zero, impulse);
+                mainBodies[5].ApplyImpulse(Vector2.Zero, impulse);
+            }
+
+            if (evt.IsActionReleased("jump_left"))
+            {
+                Vector2 impulse = lastImpulses[0] * dampJump * timesSinceJumps[0];
+                mainBodies[0].ApplyImpulse(Vector2.Zero, impulse);
+                mainBodies[5].ApplyImpulse(Vector2.Zero, impulse);
+            }
+
+            if (evt.IsActionReleased("jump_right"))
+            {
+                Vector2 impulse = lastImpulses[1] * dampJump * timesSinceJumps[1];
+                mainBodies[0].ApplyImpulse(Vector2.Zero, impulse);
+                mainBodies[5].ApplyImpulse(Vector2.Zero, impulse);
+            }
+
+            if (evt.IsActionReleased("jump_up"))
+            {
+                Vector2 impulse = lastImpulses[2] * dampJump * timesSinceJumps[2];
                 mainBodies[0].ApplyImpulse(Vector2.Zero, impulse);
                 mainBodies[5].ApplyImpulse(Vector2.Zero, impulse);
             }
@@ -207,6 +296,9 @@ namespace Bread
                 }
             }
 
+            if (!canDoubleJump && contactCount >= 4)
+                canDoubleJump = true;
+
             partsOnGround = contactCount;
         }
 
@@ -237,6 +329,17 @@ namespace Bread
             {
                 body.ToasterImpulse = impulse;
             }
+        }
+
+        public void PeanutButterUpgrade()
+        {
+            HasPeanutButterUpgrade = true;
+            shaderMaterial.SetShaderParam("outline", new Color("bb7547"));
+        }
+
+        public void SourdoughUpgrade()
+        {
+            hasSourdoughUpgrade = true;
         }
 
     }

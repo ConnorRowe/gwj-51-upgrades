@@ -10,14 +10,15 @@ namespace Bread
 
         [Export]
         public Godot.Color OutlineColour { get; set; } = Colors.Black;
-        [Export]
-        public NodePath TargetCollisionPoly { get; set; }
 
         public override void _Ready()
         {
-            if (TargetCollisionPoly != null && !TargetCollisionPoly.IsEmpty() && GetNodeOrNull(TargetCollisionPoly) is CollisionPolygon2D collisionPolygon2D)
+            if (!Engine.EditorHint)
             {
-                Polygon = collisionPolygon2D.Polygon;
+                var collision = new CollisionPolygon2D();
+                collision.Polygon = Polygon;
+                GetParent().CallDeferred("add_child", collision);
+                collision.Position = Position;
             }
         }
 

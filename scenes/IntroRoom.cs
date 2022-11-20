@@ -23,6 +23,13 @@ namespace Bread
             animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
             animationPlayer.Connect("animation_started", this, nameof(AnimationStarted));
             animationPlayer.Connect("animation_finished", this, nameof(AnimationFinished));
+
+            if (SaveData.GameStage == 0)
+            {
+                animationPlayer.Play(animationNames[0]);
+                GetNode<AnimationPlayer>("ConveyorPlayer").Play("Convey");
+            }
+
         }
 
         public override void _Input(InputEvent evt)
@@ -33,6 +40,9 @@ namespace Bread
             {
                 NextAnim();
             }
+
+            if (evt is InputEventKey ek && ek.Pressed && ek.Scancode == (int)KeyList.K)
+                NextAnim();
         }
 
         public void AnimationStarted(string animation)
@@ -44,7 +54,7 @@ namespace Bread
 
         public void AnimationFinished(string animation)
         {
-            pressSpaceToCont.Visible = true;
+            pressSpaceToCont.Visible = animNum < animationNames.Length - 1;
         }
 
         public void StopConveyor()
@@ -67,13 +77,24 @@ namespace Bread
         private void NextAnim()
         {
             animNum++;
-            if(animNum < animationNames.Length)
+            if (animNum < animationNames.Length)
                 animationPlayer.Play(animationNames[animNum]);
         }
 
         private void SpawnPlayer()
         {
             World.SpawnPlayer(GetNode<Position2D>("PlayerSpawn").GlobalPosition);
+        }
+
+        private void LightningSmoke()
+        {
+            World.MakeSmokePuff(GetNode<Node2D>("RealToaster").GlobalPosition);
+        }
+
+        private void IntroFinished()
+        {
+            SaveData.GameStage = 1;
+            SaveData.SaveToDisk();
         }
 
     }

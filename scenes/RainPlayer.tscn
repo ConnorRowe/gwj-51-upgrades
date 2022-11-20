@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://audio/sfx/pinknoise.wav" type="AudioStream" id=1]
+
+[node name="Rain" type="AudioStreamPlayer2D"]
+position = Vector2( 33, 0 )
+stream = ExtResource( 1 )
+volume_db = -7.2
+autoplay = true
+max_distance = 300.0
+attenuation = 5.27803
+bus = "SFX_Reverb"
