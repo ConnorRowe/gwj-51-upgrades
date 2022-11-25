@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://textures/metal_tile.png" type="Texture" id=1]
 [ext_resource path="res://textures/transition.png" type="Texture" id=2]
@@ -80,6 +80,9 @@ extents = Vector2( 160, 115.5 )
 
 [sub_resource type="RectangleShape2D" id=32]
 extents = Vector2( 29.5, 20.5 )
+
+[sub_resource type="RectangleShape2D" id=33]
+extents = Vector2( 23.75, 17.5 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 9 )
@@ -170,11 +173,12 @@ __meta__ = {
 }
 
 [node name="IntroRoom" parent="RoomAreas" instance=ExtResource( 11 )]
+collision_layer = 0
+input_pickable = true
 BackgroundTexture = ExtResource( 7 )
 
 [node name="RoomArea" parent="RoomAreas" instance=ExtResource( 8 )]
 position = Vector2( 320, 0 )
-input_pickable = false
 MusicTrack = ExtResource( 4 )
 BackgroundTexture = ExtResource( 7 )
 
@@ -190,7 +194,7 @@ scale = Vector2( 19.75, 9.85 )
 position = Vector2( 17, 115 )
 
 [node name="ActiveSprite" parent="RoomAreas/RoomArea/Checkpoint" index="0"]
-frame = 9
+frame = 4
 
 [node name="CollisionShape2D" parent="RoomAreas/RoomArea/Checkpoint" index="2"]
 position = Vector2( 25.5, -2 )
@@ -467,7 +471,7 @@ shape = SubResource( 31 )
 
 [node name="Polygon2D" type="Polygon2D" parent="RoomAreas/RoomArea4/StaticBody2D"]
 color = Color( 0.4, 0.258824, 0.458824, 1 )
-polygon = PoolVector2Array( 320, 40, 263, 40, 263, 163, 78, 163, 58, 163, 24, 156, 15, 134, 14, 69, 37, 48, 70, 48, 70, 69, 37, 69, 37, 127.552, 44.1607, 134, 78, 134, 78, 44, 3, 44, 3, 8, 46, 8, 46, 13, 64, 13, 64, 8, 263, 8, 270, 0, 309, 0, 316, 8, 320, 8, 320, -51, 310, -51, 310, -21, 274, -21, 261, -7, 242.591, -7, 239, -12, 234.915, -7, 206.126, -6.99999, 199, -13, 189.175, -6.99999, 181, -28, 174.078, -6.99999, 136.996, -6.99999, 132, -13, 127.726, -6.99999, 86.9291, -6.99999, 79, -27, 76.0663, -6.99999, 67.775, -7, 63, -18, 59.1598, -7, -1, -7, 0, 178, 320, 179 )
+polygon = PoolVector2Array( 320, 40, 263, 40, 263, 163, 78, 163, 58, 163, 24, 156, 15, 134, 14, 69, 37, 48, 70, 48, 70, 69, 37, 69, 37, 127.552, 44.1607, 134, 78, 134, 78, 44, 3, 44, 3, 8, 46, 8, 46, 13, 64, 13, 64, 8, 263, 8, 270, 0, 309, 0, 316, 8, 320, 8, 320, -51, 310, -51, 310, -21, 274, -21, 261, -7, 242.591, -7, 241, -10, 237, -10, 234.915, -7, 206.126, -6.99999, 199, -13, 189.175, -6.99999, 181, -28, 174.078, -6.99999, 136.996, -6.99999, 132, -13, 127.726, -6.99999, 86.9291, -6.99999, 79, -27, 76.0663, -6.99999, 67.775, -7, 63, -18, 59.1598, -7, -1, -7, 0, 178, 320, 179 )
 script = ExtResource( 3 )
 OutlineColour = Color( 0.196078, 0.168627, 0.156863, 1 )
 
@@ -485,7 +489,7 @@ Size = Vector2( 210, 102 )
 position = Vector2( 283, 7 )
 
 [node name="ActiveSprite" parent="RoomAreas/RoomArea4/Checkpoint" index="0"]
-frame = 3
+frame = 8
 
 [node name="CollisionShape2D" parent="RoomAreas/RoomArea4/Checkpoint" index="2"]
 position = Vector2( 9, 12.5 )
@@ -513,6 +517,16 @@ Size = Vector2( 66, 40 )
 
 [node name="Checkpoint2" parent="RoomAreas/RoomArea4" instance=ExtResource( 14 )]
 position = Vector2( 21, -32 )
+
+[node name="Checkpoint3" parent="RoomAreas/RoomArea4" instance=ExtResource( 14 )]
+position = Vector2( 290, -43 )
+
+[node name="ActiveSprite" parent="RoomAreas/RoomArea4/Checkpoint3" index="0"]
+frame = 6
+
+[node name="CollisionShape2D" parent="RoomAreas/RoomArea4/Checkpoint3" index="2"]
+position = Vector2( 3.25, 8.5 )
+shape = SubResource( 33 )
 
 [node name="RoomArea5" parent="RoomAreas" instance=ExtResource( 8 )]
 position = Vector2( 710, 208 )
@@ -609,6 +623,8 @@ autowrap = true
 
 [node name="EndRoom" parent="RoomAreas" instance=ExtResource( 30 )]
 position = Vector2( -571, 205 )
+collision_layer = 0
+input_pickable = true
 BackgroundTexture = ExtResource( 19 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="RoomAreas/EndRoom"]
@@ -616,7 +632,7 @@ BackgroundTexture = ExtResource( 19 )
 [node name="Polygon2D" type="Polygon2D" parent="RoomAreas/EndRoom/StaticBody2D"]
 position = Vector2( 221, 97 )
 color = Color( 0.2, 0.223529, 0.254902, 1 )
-polygon = PoolVector2Array( -228, -98, -226, 95, 99, 91, 99, -47, 94, -35, 94, 80, -221, 81, -222, -97 )
+polygon = PoolVector2Array( -228, -198, -226, 95, 99, 91, 99, -47, 94, -35, 94, 80, -221, 81, -222, -97, -222.376, -103.328, 100, -113, 101, -182 )
 script = ExtResource( 3 )
 OutlineColour = Color( 0.133333, 0.109804, 0.101961, 1 )
 
@@ -652,6 +668,10 @@ position = Vector2( 160, 90 )
 current = true
 process_mode = 0
 
+[node name="CheckRoomTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
 [editable path="RoomAreas/RoomArea"]
 [editable path="RoomAreas/RoomArea/Checkpoint"]
 [editable path="RoomAreas/RoomArea2"]
@@ -660,4 +680,5 @@ process_mode = 0
 [editable path="RoomAreas/RoomArea4"]
 [editable path="RoomAreas/RoomArea4/Checkpoint"]
 [editable path="RoomAreas/RoomArea4/Upgrade"]
+[editable path="RoomAreas/RoomArea4/Checkpoint3"]
 [editable path="RoomAreas/RoomArea5/Upgrade"]

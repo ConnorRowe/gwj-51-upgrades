@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://MainTheme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/menus/EndScreen.cs" type="Script" id=2]
+[ext_resource path="res://font/ConsFont_v2.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://textures/logo.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFontData" id=28]
 font_path = "res://font/ConsFont_v2.ttf"
@@ -10,6 +12,9 @@ font_path = "res://font/ConsFont_v2.ttf"
 outline_color = Color( 0.913725, 0.709804, 0.639216, 1 )
 use_mipmaps = true
 font_data = SubResource( 28 )
+
+[sub_resource type="DynamicFont" id=30]
+font_data = ExtResource( 3 )
 
 [node name="EndScreen" type="Control"]
 anchor_right = 1.0
@@ -20,19 +25,19 @@ script = ExtResource( 2 )
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 color = Color( 0.141176, 0.133333, 0.203922, 1 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = 18.0
-margin_top = 23.0
-margin_right = 304.0
-margin_bottom = 145.0
+margin_left = 102.0
+margin_top = 55.0
+margin_right = 306.0
+margin_bottom = 140.0
 custom_fonts/font = SubResource( 29 )
-text = "congratulations, you escaped the toaster factory!
+text = "bread boy lived happily ever after!
 
-bread boy lived happily ever after
-
-thanks for playing! - connor"
+thanks for playing! - connor
+:D"
 
 [node name="Button" type="Button" parent="."]
 margin_left = 113.0
@@ -40,3 +45,31 @@ margin_top = 134.0
 margin_right = 206.0
 margin_bottom = 164.0
 text = "return"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource( 4 )
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 51.0
+margin_top = 10.0
+margin_right = -20.0
+margin_bottom = -144.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+
+[node name="Label3" type="RichTextLabel" parent="."]
+margin_left = 54.0
+margin_top = 14.0
+margin_right = 351.0
+margin_bottom = 65.0
+mouse_filter = 2
+custom_fonts/normal_font = SubResource( 30 )
+bbcode_enabled = true
+bbcode_text = "[wave]congrats you escaped the toaster factory!"
+text = "congrats you escaped the toaster factory!"
+scroll_active = false

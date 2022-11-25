@@ -15,7 +15,6 @@ namespace Bread
         Vector2 lastLinearVelocity = Vector2.Zero;
         bool isUnderwater = false;
         Player player;
-        bool canSwim = true;
 
         public override void _Ready()
         {
@@ -25,35 +24,13 @@ namespace Bread
             AddChild(crumbs);
         }
 
-        public override void _Input(InputEvent evt)
+        public override void _PhysicsProcess(float delta)
         {
-            if (player.InputLocked)
-                return;
-
-            if (isUnderwater && player.HasPeanutButterUpgrade && canSwim)
+            if (isUnderwater && player.HasPeanutButterUpgrade)
             {
-                var swimDir = Vector2.Zero;
-
-                if (evt.IsActionPressed("jump_up"))
-                    swimDir = Vector2.Up;
-                else if (evt.IsActionPressed("jump_left"))
-                    swimDir = Vector2.Left;
-                else if (evt.IsActionPressed("jump_right"))
-                    swimDir = Vector2.Right;
-                else if (evt.IsActionPressed("down"))
-                    swimDir = Vector2.Down;
-
-                if (swimDir != Vector2.Zero)
-                {
-                    ApplyImpulse(swimDir, swimDir * 60);
-                    canSwim = false;
-
-                    GetTree().CreateTimer(.5f).Connect("timeout", this, nameof(ResetCanSwim));
-                }
+                ApplyCentralImpulse(Input.GetVector("jump_left", "jump_right", "jump_up", "down") * 100 * delta);
             }
         }
-
-
 
         public void ForcePosition(Vector2 globalPosition)
         {
@@ -64,11 +41,6 @@ namespace Bread
         public void ReleaseForcePosition()
         {
             isForcingPosition = false;
-        }
-
-        public void ResetCanSwim()
-        {
-            canSwim = true;
         }
 
         public override void _IntegrateForces(Physics2DDirectBodyState state)

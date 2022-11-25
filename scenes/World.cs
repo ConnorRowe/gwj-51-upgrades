@@ -42,6 +42,7 @@ namespace Bread
         Label deathMSG;
         SceneTreeTween deathTween = null;
         float count = 0;
+        bool checkRoom = false;
 
         public override void _Ready()
         {
@@ -52,6 +53,7 @@ namespace Bread
             bgMat = (ShaderMaterial)bg.Material;
             deathMSG = GetNode<Label>("UI/DeathMSGHolder/DeathMSG");
             deathMSGShaker = GetNode<Shaker>("UI/DeathMSGHolder/Shaker");
+            GetNode("CheckRoomTimer").Connect("timeout", this, nameof(CheckRoom));
 
             MoveCameraToRoom(GetNode<RoomArea>("RoomAreas/IntroRoom"), instant: true);
 
@@ -70,6 +72,16 @@ namespace Bread
         {
             if (!movingCamera && targetPlayerBody != null)
                 camera.GlobalPosition = targetPlayerBody.GlobalPosition;
+
+            if (checkRoom && Player != null)
+            {
+                checkRoom = false;
+
+                var spaceState = GetWorld2d().DirectSpaceState;
+                var result = spaceState.IntersectPoint(Player.Head.GlobalPosition, 1, collisionLayer: 32, collideWithBodies: false, collideWithAreas: true);
+                if (result.Count > 0 && ((Godot.Collections.Dictionary)result[0])["collider"] is RoomArea roomArea)
+                    MoveCameraToRoom(roomArea);
+            }
         }
 
         public override void _Process(float delta)
@@ -95,7 +107,7 @@ namespace Bread
                 INSTANCE.GetNode<Sprite>("UI/Upgrades/PB").Visible = true;
             if (gameStage >= 3)
                 INSTANCE.GetNode<Sprite>("UI/Upgrades/SD").Visible = true;
-            if (gameStage >= 3)
+            if (gameStage >= 4)
                 INSTANCE.GetNode<Sprite>("UI/Upgrades/EB").Visible = true;
         }
 
@@ -275,6 +287,18 @@ namespace Bread
             speechBubble.FollowNode = followNode;
             speechBubble.Offset = offset;
             INSTANCE.AddChild(speechBubble);
+        }
+
+        void CheckRoom()
+        {
+            checkRoom = true;
+        }
+
+        public override void _ExitTree()
+        {
+            base._ExitTree();
+
+            Player = null;
         }
     }
 }

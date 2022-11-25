@@ -4,9 +4,6 @@ namespace Bread
 {
     public class PausePopup : PopupPanel
     {
-        [Signal]
-        public delegate void Quit();
-
         public override void _Ready()
         {
             GetNode("VBoxContainer/HBoxContainer/Return").Connect("pressed", this, nameof(Return));
@@ -23,7 +20,7 @@ namespace Bread
         {
             Return();
 
-            EmitSignal(nameof(Quit));
+            GetTree().ChangeScene("res://scenes/menus/MainMenu.tscn");
         }
 
         private void Return()

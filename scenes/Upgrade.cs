@@ -30,10 +30,12 @@ namespace Bread
                 World.UpgradePopup.PopUp(UpgradeName, UpgradeDesc);
                 Sounds.Upgrade();
 
-                if(GameStage == 2)
+                if (GameStage == 2)
                     pb.GetParent<Player>().PeanutButterUpgrade();
-                else if(GameStage == 3)
+                else if (GameStage == 3)
                     pb.GetParent<Player>().SourdoughUpgrade();
+                else if (GameStage == 4)
+                    pb.GetParent<Player>().BadgeUpgrade();
                 if (SaveData.GameStage < GameStage)
                 {
                     SaveData.GameStage = GameStage;

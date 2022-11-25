@@ -105,7 +105,7 @@ namespace Bread
 
             if (isWet && wetness < 1f)
             {
-                wetness += HasPeanutButterUpgrade ? delta * .3f : delta;
+                wetness += HasPeanutButterUpgrade ? delta * .15f : delta;
                 if (wetness > 1f)
                 {
                     wetness = 1f;
